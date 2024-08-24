@@ -1,0 +1,151 @@
+      {% load static %}
+      <!-- banner bg main start -->
+<nav>
+  <div class="banner_bg_main pb-5">
+    <!-- header top section start -->
+    <div class="container">
+       <div class="header_section_top">
+          <div class="row">
+             <div class="col-sm-12">
+                <div class="custom_menu">
+                   <ul>
+                      <li><a href="{% url 'inventory:best-products'%}">Best Selling</a></li>
+                      <li><a href="{% url 'inventory:gifts'%}">Gift Ideas</a></li>
+                      <li><a href="{% url 'account:api-page'%}"><b class="text-danger">O</b> bazar API</a></li>
+                      <li><a href="{% url 'inventory:delivery-services'%}">Delivery Service</a></li>
+                   </ul>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- header top section start -->
+    <!-- logo section start -->
+    <div class="logo_section">
+       <div class="container">
+          <div class="row">
+             <div class="col-sm-12">
+                <div class="logo"><a href="{% url 'inventory:list-products'%}" class="text-decoration-none logo_o_bazar"><b style="color: red;">O</b> bazar </a></div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- logo section end -->
+    <!-- header section start -->
+    <div class="header_section">
+       <div class="container">
+          <div class="containt_main">
+             <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="{% url 'inventory:list-products'%}">Home</a>
+                {% for cat in categories %}
+                  <a class="dropdown-item" href="{% url 'inventory:products-by-category' cat.slug %}">{{ cat.name }}</a>
+                {% endfor %}
+             </div>
+             <span class="toggle_icon" onclick="openNav()"><img src="{% static 'toggle-icon.png'%}"></span>
+
+             <div class="main">
+                <!-- Another variation with a button -->
+                <form action="{% url 'inventory:list-products'%}" method="get">
+                  <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                       <button class="btn btn-secondary" type="submit" style="background-color: #f23322; border-color:#f22222 ">
+                       <i class="fa fa-search"></i>
+                       </button>
+                    </div>
+                  </div>
+                </form>
+             </div>
+             <div class="header_box">
+              <!-- DASHBOARD LOGIN LOGOUT -->
+                <div class="dropdown dashboard_login_logout">
+                  <a href="#" class="dashboard_a" id = "navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                      <b class="small hello_username__">Hello,
+                        {% if request.user.is_authenticated %}
+                            {{ request.user.user_name }}
+                        {% else %}
+                            Login
+                        {% endif %}
+                      </b><br>
+                      <span class="fs15 fw200 account_lists__"><b> Dashboard &amp; Lists</b></span>
+                  </a>
+                  <!-- Drop down menu -->
+                  <div class="dropdown-menu rounded-0" aria-labelledby="navbarDropdown">
+                    <div class="card border-0">
+                      <div class="card-body">
+                        <h6 class="card-title my_dashboard___"><b>My Dashboard</b></h6>
+                        <ul class="list-group list-group-flush dropdown-account-link">
+                          {% if request.user.is_authenticated %}
+                            <a href="{% url 'account:dashboard'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link">Your Account</a>
+                            <a href="{% url 'orders:order-list'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link">Orders</a>
+                            <a href="{% url 'account:logout'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link">Sing Out</a>
+                          {% else %}
+                          <a href="{% url 'account:login'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link">Sign In</a>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END DASHBOARD LOGIN LOGOUT -->
+
+                <!-- WISHLIST & BASKET -->
+                <div class="login_menu">
+                   <ul>
+                    <!-- WISHLIST BUTTON -->
+                      <li>
+                        <a class="position-relative icon__" href="{% url 'wishlist:list'%}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg>
+                          <span id="wishlist_how_many" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% if wishlist|length > 0%}
+                                {{ wishlist|length }}
+                            {% else %}
+                                0
+                            {% endif %}
+                            <span class="visually-hidden">unread messages</span>
+                          </span>
+                        </a>
+                      </li>
+                       <!-- END WISHLIST BUTTON -->
+                       <!-- BASKET BUTTON -->
+                      <li class="mx-2">
+                        <a class="position-relative icon__" href="{% url 'basket:list'%}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                          </svg>
+                          <span id="total_quantity" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% if basket|length > 0 %}
+                                {{ basket|length }}
+                            {% else %}
+                                0
+                            {% endif %}
+                            <span class="visually-hidden">unread messages</span>
+                          </span>
+                        </a>
+                      </li>
+                      <!-- END BASKET BUTTON -->
+                   </ul>
+                </div>
+                <!-- END WISHLIST & BASKET -->
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- header section end -->
+ </div>
+</nav>
+     <!-- banner bg main end -->
+
+     <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+   </script>

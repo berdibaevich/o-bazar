@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+API page
+{% endblock title %}
+
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-lg-10 mx-auto">
+        <div class="card p-3">
+            <h5 class="o-bazar-api_"><b class="text-danger text_o__">O</b> bazar <b class="text-success">A</b><b class="text-warning">P</b><b class="text-success">I</b></h5>
+            <p class="roles_text__ text-center">You need to follow the rules below</p>
+            <p class="roles_text__">The <span class="o-bazar-api_"><b class="text-danger text_o__">O</b> bazar <b class="text-success">A</b><b class="text-warning">P</b><b class="text-success">I</b></span> is just <b class="o-bazar-api_">GET</b> request that you can play around with.Other requests such as <b class="o-bazar-api_">POST, PUT, DELETE</b> are not provided for you</p>
+        </div>
+    </div>
+</div>
+<!-- GET REQUEST API -->
+
+
+<div class="row mt-3 ">
+  <div class="col-lg-10 mx-auto">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <b class="text-success">ENDPOINTS</b>
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="accordion-body">
+              <h5 class="o-bazar-api_"><b class="text-danger text_o__">O</b> bazar <b class="text-success">A</b><b class="text-warning">P</b><b class="text-success">I</b></h5>
+              <p>The <b class="text-danger o-bazar__">O</b> <b class="o-bazar__">bazar</b> API can provide a wide range of functionality to help you manage your online store, process payments, and enhance the customer experience. With the <b class="text-danger o-bazar__">O</b> <b class="o-bazar__">bazar</b> API, you can seamlessly integrate your online store with third-party applications and services, such as shipping providers, payment gateways, and marketing tools.</p>
+              <p>In order to make successful Web API requests your app will need a valid access token.</p>
+              <p><b>Browse our available Web API endpoints using the sidebar at the bottom.</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- AUTHORIZATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <b class="text_color__">Authorization</b>
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p class="text-center"><strong>Authorization.</strong></p>
+            <p>Authorization refers to the process of creating a user or application access permissions to <b class="text-danger o-bazar__">O</b> <b class="o-bazar__">bazar</b> data and features</p>
+            <p><b class="text_color__">Request authorization</b></p>
+            <span>The first step is to send a POST request to the /api/token endpoint of the <b class="text-danger o-bazar__">O</b> <b class="o-bazar__">bazar</b>  with the following code of Python.</span><br>
+            <p><b>Example</b></p>
+            <p>The following Python creates and sends an authorization request to get Token</p>
+            <pre><code>post_url = "https://berdibaevichpy.pythonanywhere.com/api/token/"
+              email = input("Enter E-mail: ")
+              password = input("Enter password: ")
+              get_response_token = requests.post(auth_url, json={"email": email, "password": password})
+              print(get_response_token.json())</code></pre>
+              <button class="btn signup_btn__" onclick="navigator.clipboard.writeText('post_url = &quot;http://localhost/api/token/&quot;\nemail = input(&quot;Enter E-mail: &quot;)\npassword = input(&quot;Enter password: &quot;)\nget_response_token = requests.post(auth_url, json={&quot;email&quot;: email, &quot;password&quot;: password})\nprint(get_response_token.json())')">Copy</button>
+              <br>
+            <p>If everything goes well, you’ll receive a response similar to this containing the Access Token:</p>
+            <code>{'refresh': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3OTY4MTc0OCwiaWF0IjoxNjc3MDg5NzQ4LCJqdGkiOiJmNTliYmU0YjdmMWE0NjJkOWFmMmYzMTJjOWY5MjBhZiIsInVzZXJfaWQiOjN9.dTEIY_t4_Fp_-fH3w4_UOblzKDWVFZumRoYLDDCYZbE', 'access': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3MDkwMzQ4LCJpYXQiOjE2NzcwODk3NDgsImp0aSI6Ijc1NTllZjZmNGM1NTQyMTU4MDE4ZjU4NjQzMjA0MjYwIiwidXNlcl9pZCI6M30.IVcY6EKLbgY4hD3u8XLPsCGWH8RK2FJ2pMpQ3wh5MhA'}</code><br>
+            <h3><b class="text_color__">How to use the Access Token</b></h3>
+            <p>The access token allows you to make requests to the <b class="text-danger o-bazar__">O</b> <b class="o-bazar__">bazar</b>  API. To do so, you need to include the following header in your API calls</p>
+            <code>access_token = get_response_token.json()['access']</code><br>
+
+            <code>
+                    url = "https://berdibaevichpy.pythonanywhere.com/api/category/" <br>
+                    headers = {"Authorization": f"Bearer {access_token}"} <br>
+                    response = requests.get(url, headers=headers) <br>
+                    pprint.pprint(response.json()) <br>
+            </code>
+            <p>If everything goes correctly, you will receive a response similar to this</p>
+            <code>
+              {'count': 3,
+'next': None,
+'previous': None,
+'results': {'categories': [{'children': [{'name': 'Programming',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/programming/'},
+                            {'name': 'Biznes kitaplar',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/biznes-kitaplar/'}],
+               'name': 'Books',
+               'num_children': 2,
+               'products_url': 'https://berdibaevichpy.pythonanywhere.com/api/products_by_category/books/',
+               'slug': 'books'},
+              {'children': [{'name': 'Fitness aksessur',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/fitness-aksessur/'},
+                            {'name': 'Juwiriw ushin jollar',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/juwiriw-ushin-jollar/'}],
+               'name': 'Sport buyumlar',
+               'num_children': 2,
+               'products_url': 'https://berdibaevichpy.pythonanywhere.com/api/products_by_category/sport-buyumlar/',
+               'slug': 'sport-buyumlar'},
+              {'children': [{'name': 'AUX',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/aux/'},
+                            {'name': 'Samsung',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/samsung/'},
+                            {'name': 'Artel',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/artel/'},
+                            {'name': 'Avalon',
+                             'products': 'https://berdibaevichpy.pythonanywhere.com/api/products_category_child/avalon/'}],
+               'name': 'Kontisionerler',
+               'num_children': 4,
+               'products_url': 'https://berdibaevichpy.pythonanywhere.com/api/products_by_category/kontisionerler/',
+               'slug': 'kontisionerler'}],
+'customers': 'https://berdibaevichpy.pythonanywhere.com/api/customers/',
+'delivery_companies': 'https://berdibaevichpy.pythonanywhere.com/api/deliveries/'}}
+          </code>
+
+          </div>
+        </div>
+      </div>
+       <!-- END AUTHORIZATION -->
+
+      <!-- CATEGORIES & PRODUCTS API -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <b class="text_color__">Categories & Products</b>
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><b class="create_account__">GET CATEGORY</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/category/</code><br><br><br>
+            <h6><b class="create_account__">GET PRODUCTS BY CATEGORY</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/products_by_category/slug/</code> <br><br><br>
+            <h6><b class="create_account__">GET PRODUCTS BY CATEGORY SHILD</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/products_category_child/slug/</code> <br><br><br>
+            <h6><b class="create_account__">GET PRODUCT DETAIL</b></h6>
+            <p><b>Request</b></p>
+            <p>Slug of the product</p>
+            <code>/api/product_detail/slug/</code> <br><br><br>
+            <h6><b class="create_account__">GET PRODUCT'S IMAGES</b></h6>
+            <p><b>Request</b></p>
+            <p>ID of product inventory</p>
+            <code>/api/images/id/</code>
+          </div>
+        </div>
+      </div>
+      <!-- END CATEGORIES & PRODUCTS API -->
+
+      <!-- CUSTOMERS & ADDRESSES API -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <b class="text_color__">Customers & Addresses</b>
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><b class="create_account__">GET CUSTOMERS</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/customers/</code><br><br><br>
+            <h6><b class="create_account__">GET CUSTOMER'S ADDRESSES</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/customer/addresses/id/</code> <br><br><br>
+            <h6><b class="create_account__">GET CUSTOMER'S DETAIL ADDRESSES</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/customer/address_detail/id/</code> <br><br><br>
+          </div>
+        </div>
+      </div>
+      <!-- END CUSTOMERS & ADDRESSES API -->
+
+      <!-- DELIVERIES API -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <b class="text_color__">Deliveries</b>
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><b class="create_account__">GET DELIVERIES</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/deliveries/</code><br><br><br>
+            <h6><b class="create_account__">GET DELIVERY'S DETAIL</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/delivery_detail/id/</code> <br><br><br>
+          </div>
+        </div>
+      </div>
+      <!-- END DELIVERIES API -->
+
+      <!-- ORDERS & ITEMS API -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            <b class="text_color__">Orders & Items</b>
+          </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><b class="create_account__">GET ORDERS</b></h6>
+            <p><b>Request</b></p>
+            <p>The ID will be the customer ID</p>
+            <code>/api/orders/id/</code><br><br><br>
+            <h6><b class="create_account__">GET ORDER'S DETAIL</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/order/id/</code> <br><br><br>
+            <h6><b class="create_account__">GET ITEMS</b></h6>
+            <p><b>Request</b></p>
+            <p>The ID will be the Order ID</p>
+            <code>/api/items/id/</code> <br><br><br>
+            <h6><b class="create_account__">GET ITEM'S DETAIL</b></h6>
+            <p><b>Request</b></p>
+            <code>/api/item/id/</code> <br><br><br>
+          </div>
+        </div>
+      </div>
+      <!-- END ORDERS & ITEMS API -->
+
+      <!-- SEARCH FIELDS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            <b class="text_color__">Search</b>
+          </button>
+        </h2>
+        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <h6><b class="create_account__">GET PRODUCTS DATA BY SEARCH</b></h6>
+            <p><b>Request</b></p>
+            <p>Only included Product name and Product Brand</p>
+            <code>/api/search/?q=something</code><br><br><br>
+          </div>
+        </div>
+      </div>
+      <!-- END SEARCH FIELDS -->
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Order placed
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 mx-auto">
+                                <div class="p-4">
+                                    <h3 class="mb-4 create_account__">Order has been placed</h3>
+                                    <p>Check your Orders bellow link</p>
+                                    <a class="btn signup_btn__ w-100" href="{% url 'orders:order-list'%}">See orders</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

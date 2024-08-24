@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Delivery Service
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    .delivery_method{
+        font-size: 17px;
+        font-weight: 700;
+        color: black;
+    }
+</style>
+
+<div class="nav-scroller py-1 mb-2 bg-light mt-3 mb-2">
+    <div class="nav d-flex mx-4">
+            <a class="p-2 delivery_method mx-4" href="{% url 'inventory:delivery_services-method' 'IS'%}">In Store</a>
+            <a class="p-2 delivery_method mx-4" href="{% url 'inventory:delivery_services-method' 'HD'%}">Home Delivery</a>
+            <a class="p-2 delivery_method mx-4" href="{% url 'inventory:delivery_services-method' 'DD'%}">Digital Delivery</a>
+    </div>
+  </div>
+</div>
+
+{% if page == 'delivery' %}
+<main class="container">
+  <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 fst-italic">Delivery Service</h1>
+      <p class="lead my-3">Delivery is the process of transporting goods from a source location to a predefined destination. Cargo is primarily delivered via roads and railroads on land, shipping lanes on the sea, and airline networks in the air.</p>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    {% for delivery in deliveries %}
+        <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success text-center">{{ delivery.delivery_name}}</strong>
+            <h3 class="mb-0 "><small class="text-primary">Delivery price:</small> <b>${{ delivery.delivery_price}}</b></h3>
+            <div class="mb-1 text-muted">{{ delivery.delivery_timeframe}}</div>
+            <p class="mb-auto">We deliver your products to any location, request a driver to collect your Parcel and deliver it to your end customer around {{ delivery.delivery_window}}!</p>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+  </div>
+</main>
+{% else %}
+
+<main class="container mt-2">  
+    <div class="row mb-2">
+      {% for delivery in deliveries %}
+          <div class="col-md-6">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-success text-center">{{ delivery.delivery_name}}</strong>
+              <h3 class="mb-0 "><small class="text-primary">Delivery price:</small> <b>${{ delivery.delivery_price}}</b></h3>
+              <div class="mb-1 text-muted">{{ delivery.delivery_timeframe}}</div>
+              <p class="mb-auto">We deliver your products to any location, request a driver to collect your Parcel and deliver it to your end customer around {{ delivery.delivery_window}}!</p>
+              </div>
+          </div>
+          </div>
+          {% empty %}
+            <b><small class="text-primary text-center">No Delivery Yet</small></b>
+      {% endfor %}
+    </div>
+  </main>
+
+{% endif %}
+
+{% endblock content %}

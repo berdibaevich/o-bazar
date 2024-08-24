@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} Add address {% endblock %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class=" py-5">
+                <div class="row">
+                    <div class="col-sm-10 col-md-7 mx-auto">
+                        <h1 class="h3 create_account__">Create/Edit Address</h1>
+                        <div>Add a new delivery <b>address</b> and delivery preferences</div>
+                        <hr>
+                        <form action="" name = "address_form" method = "post">
+                            {% if form.errors %}
+                                <div class="alert alert-primary" role="alert">
+                                    Error: Please try again!
+                                </div>
+                            {% endif %}
+                            {% csrf_token %}
+                            <label class="small fw-bold">{{ form.full_name.label }}</label> 
+                            {{ form.full_name }}   
+
+                            <label class="small fw-bold">{{ form.phone.label }}</label> 
+                            {{ form.phone }}   
+
+                            <label class="small fw-bold">{{ form.address_line.label }}</label> 
+                            {{ form.address_line }} 
+
+                            <label class="small fw-bold">{{ form.address_line2.label }}</label> 
+                            {{ form.address_line2 }}   
+
+                            <label class="small fw-bold">{{ form.town_city.label }}</label> 
+                            {{ form.town_city }}
+
+                            <label class="small fw-bold">{{ form.postcode.label }}</label> 
+                            {{ form.postcode }}   
+                           
+                            <button class="btn signup_btn__ py-2 mb-4 mt-4 fw-bold w-100" type="button" value="Submit"
+                            onclick="submitForm()">
+                                Add Address
+                            </button>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm(){
+        const form = document.getElementsByName('address_form')[0];
+        form.submit(); // submit the form
+        form.reset(); // reset all form data
+        return false; // Prevent page refresh
+    }
+</script>
+
+{% endblock content %}

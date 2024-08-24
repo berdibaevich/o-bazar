@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Delivery Address
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="col-12">
+        <h1 class="h2 create_account__">Delivery Address</h1>
+    </div>
+    <div class="col-12">
+        <b>Please select your</b> <b class="text-danger">delivery address</b>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row g-3">
+            {% if addresses|length == 0%}
+                <div class="col-12">There are no delivery addresses!!, <a href="{% url 'account:add-address' %}">Add address</a></div>
+            {% else %}
+                <div class="col-md-4 col-lg-4 order-md-last p-0 order-3">
+                        <!-- Sub total -->
+                    <div class="d-flex bg-highlight ms-0">
+                        <div class="p-2 flex-grow-1 bg-highlight create_account__">Sub Total:</div>
+                        <div class="p-2 bg-highlight"><span class="fw-bold h5">$</span>
+                            <!-- Tomende basket context_processory jardeminde islengen ozin bilesin -->
+                        <span id="sub_total" class="fw-bold h5">{{ basket.get_total_price }}</span>
+                        </div>
+                    </div>
+                    <!-- Delivery cost -->
+                    <div class="d-flex bg-highlight">
+                        <div class="p-2 flex-grow-1 bg-highlight create_account__">Delivery Cost:</div>
+                        <div class="p-2 bg-highlight"><span class="fw-bold h5">$</span>
+                        <span id="delivery_cost" class="fw-bold h5">{{ basket.get_delivery_price }}</span>
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="d-flex bg-highlight">
+                        <div class="p-2 flex-grow-1 bg-highlight create_account__">Total:</div>
+                        <div class="p-2 bg-highlight"><span class="fw-bold h5">$</span>
+                        <span id="total" class="fw-bold h5">{{ basket.get_total_and_delivery_price }}</span>
+                        </div>
+                    </div>
+                    <!-- Pay button -->
+                    <a role="button" href="{% url 'checkout:pay'%}" class="btn signup_btn__ fw-bold w-100" type="button">
+                        Pay Securely
+                    </a>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    {% for address in addresses %}
+                        {% if not address.default %}
+                            <h1 class="h5 pt-4 create_account__">Other Addressess</h1>
+                        {% endif  %}
+                        <div class="card-mb-3 border-1 rounded-0 me-md-4" data-index="{{ address.id }}">
+                            <div class="row g-0">
+                                <div class="col">
+                                    <div class="card pb-3 rounded-0">
+                                        <div class="card-header bg-white small text-muted">
+                                            {% if address.default %}
+                                                Selected
+                                            {% endif %}
+                                            &nbsp;
+                                        </div>
+                                        <div class="card-body small pb-1">
+                                            <p class="card-text m-0 fw-bold">{{ address.full_name }}</p>
+                                            <p class="card-text m-0 fw-bold">{{ address.address_line }}</p>
+                                            <p class="card-text m-0 fw-bold">{{ address.address_line2 }}</p>
+                                            <p class="card-text m-0 fw-bold">{{ address.town_city }}</p>
+                                            <p class="card-text m-0 fw-bold">{{ address.post_code }}</p>
+                                            <p class="card-text m-0 fw-bold">Phone: {{ address.phone }}</p>
+                                            <div class="pt-5">
+                                                <a href="{% url 'account:edit-address' address.id %}" class="text-decoration-none">Edit</a>|
+                                                {% if not address.default %}
+                                                <a href="{% url 'account:set-default' address.id%}" class="text-decoration-none">Select</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}

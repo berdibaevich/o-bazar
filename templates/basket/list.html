@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Basket Summary
+{% endblock title %}
+
+
+{% block content %}
+    <main class="pt-5 mb-5 px-4 px-md-0">
+        <h1 class="h5 create_account__">Shopping basket</h1>
+        {% if basket %}
+        {% for item in basket %}
+            {% with product=item.product %}
+                <div class="row mb-4 border product_item" data-index="{{ product.id }}">
+                    <div class="col-md-5 col-lg-5 order-md-first bg-light ">
+                        {% if product.media_product_inventory %}
+                            {% for image in product.media_product_inventory.all %}
+                                {% if image.is_feature %}
+                                    <img src="{{ image.image.url }}" width="200px" class="img-fluid mx-auto d-block p-2" alt="{{ image.alt_text }}">
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5 p-1">
+                        <h1 class="mb-0 h3 text-center mt-2 mb-3">{{ product.product.name }}</h1>
+                        <p><span class="create_account__ ">Brand</span>     <b>({{ product.brand.name}})</b></p>
+                        <div class="border">
+                            <div class="col border-bottom">
+                                <div class="row p-3">
+                                    <div class="col-6 create_account__">Price</div>
+                                    <div class="col-6 text-end">
+                                        <span class="h4 fw-bold">
+                                            ${{ item.price }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row p-3">
+                                        <div class="col-6">
+                                            <label for="select"><b>Quantity</b></label>
+                                            <select  id="select{{ product.id }}">
+                                                <option selected>{{item.quantity}}</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button class="btn btn-outline-secondary" id="updateBtn" value="{{ product.id }}" type="button">Update</button>
+                                            <button class="btn btn-outline-danger" id="deleteBtn" value="{{ product.id }}" type="button">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+        <!-- TOTAL PRICE  -->
+        <div class="col-12 text-end">
+            <div class="h6 fw-bold create_account__">
+                Total price:  <b>$<span id = 'subtotal'> {{ basket.get_total_price}}</b></span>
+            </div>
+        </div>
+        <!-- END TOTAL PRICE -->
+        <!-- CHECK OUT -->
+        <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
+            <div class="d-grid gap-2">
+                <!-- CHECKOUT BUTTON GO TO DELIVERY OPTIONS -->
+                <a class="btn checkout_btn__" href="{% url 'checkout:deliverychoices'%}">Checkout</a>
+            </div>
+        </div>
+        <!-- END CHECK OUT -->
+
+        {% else %}
+            <p class="text-center mt-3 product_attribute_name__ h1"><b>Empty .....</b></p>
+        {% endif %}
+    </main>
+
+    <script>
+        // UPDATE BASKET 
+        $(document).on('click', '#updateBtn', function(e){
+            e.preventDefault()
+            let product_id = $(this).val()
+            $.ajax({
+                type: 'POST',
+                url: '{% url "basket:update_basket" %}',
+                data:{
+                    product_id: product_id,
+                    product_quantity: $(`#select${product_id} option:selected`).text(),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: "post"
+                },
+                success: function(response){
+                    document.getElementById('subtotal').textContent = response.total_price
+                    document.getElementById('total_quantity').textContent = response.total_qty
+                },
+                error: function(error){
+                    console.log(error)
+                }
+            })
+        })
+
+        // END UPDATE BASKET 
+
+        // DELETE BASKET FROM SESSION
+        $(document).on('click', '#deleteBtn', function(e){
+            e.preventDefault()
+            let product_id = $(this).val()
+            $.ajax({
+                type: "POST",
+                url: "{% url 'basket:delete_basket' %}",
+                data: {
+                    product_id: product_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function(response){
+                    $(`.product_item[data-index="${product_id}"]`).remove()
+                    document.getElementById('total_quantity').textContent = response.total_qty
+                    document.getElementById('subtotal').textContent = response.total_price
+                },
+                error: function(error){
+                    console.log(error)
+                }
+            })
+            
+        })
+
+        // END DELETE BASKET FROM SESSION
+    </script>
+
+
+{% endblock content %}

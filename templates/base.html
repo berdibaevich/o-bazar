@@ -1,0 +1,57 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}O-bazar{% endblock title %}</title>
+    <!-- BOOTSTRAP SDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- END BOOTSTRAP SDN -->
+
+    <!-- FONT-AWESOME SDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- END FONT-AWESOME SDN -->
+
+    <!-- LOCAL STYLES -->
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <link rel="stylesheet" href="{% static 'css/styles2.css'%}">
+    <!-- END -->
+
+    <!-- AJAX SDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- END AJAX SDN -->
+
+  </head>
+  
+  <body>
+    <!-- Header side -->
+    {% include 'headers.html' %}
+    <!-- Header side -->
+    
+    <div class="container">
+        <!-- MESSAGE  -->
+      {% if messages %}
+        {% for message in messages %}
+            <div class="alert mt-2 mb-1 alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>{{ message }}!</strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+      {% endif %}
+    <!-- END MESSAGE -->
+  </div>
+    <div class="container font-monospace">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+     <!-- Footer side -->
+     {% include 'footer.html' %}
+     <!-- Footer side -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>

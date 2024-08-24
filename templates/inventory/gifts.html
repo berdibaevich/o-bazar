@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Gift Ideas
+{% endblock title %}
+
+
+{% block content %}
+
+
+
+
+<main>
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+          <div class="col-md-12 p-0">
+              <h1 class="text-center ">Welcome to <b class="text-danger">G</b>ift Ideas</h1>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+  
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+  
+    <div class="container marketing">
+  
+        <!-- START THE FEATURETTES -->
+  
+      <hr class="featurette-divider">
+        <!-- GIFT HUMPERS -->
+      <div class="row featurette g-3">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1 text-center"><b>{{ gifts_hampers.parent }}</b> <br></h2>
+          <div class="list-group ">
+            {% for child in gifts_hampers.children %}
+              {% if child.name != 'Hampers' and child.name != 'Chocolate Hampers' and child.name != 'Beauty & Grooming Sets' %}
+                <a href="{% url 'inventory:products-by-gifts' child.name %}" class="list-group-item list-group-item-action product__name_ ">{{ child.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="{% static 'gift-humpers.jpg'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+       <!-- END GIFT HUMPERS -->
+      <hr class="featurette-divider">
+      <!-- FOR HER -->
+      <div class="row featurette g-4">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1 text-center">{{ for_hers.parent }} <br><b>It’s that good. <span class="text-muted">See for yourself.</span></b></h2>
+          <div class="list-group mt-2">
+            {% for her in for_hers.children %}
+              {% if her.name != 'Her' %}
+            <a href="{% url 'inventory:products-by-gifts' her.name %}" class="list-group-item list-group-item-action product__name_ ">{{ her.name }}</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 order-md-1 text-center">
+            <img src="{% static 'for-her.jpg'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+       <!-- FOR HER -->
+      <hr class="featurette-divider">
+   
+        <!-- FOR HIM -->
+      <div class="row featurette g-3">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1 text-center">{{for_hims.parent}} <br></h2>
+          <div class="list-group ">
+            {% for him in for_hims.children %}
+              {% if him.name != 'Him' %}
+            <a href="{% url 'inventory:products-by-gifts' him.name %}" class="list-group-item list-group-item-action product__name_ ">{{ him.name }}</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="{% static 'for-man.webp'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+       <!-- END FOR HIM -->
+      <hr class="featurette-divider">
+      <!-- FOR HOME KITCHEN -->
+      <div class="row featurette g-4">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1 text-center">{{ home_kitchens.parent }}</h2>
+          <div class="list-group mt-2">
+            {% for hk in home_kitchens.children %}
+              {% if hk.name != 'Showpieces' and hk.name != 'Toys & Games'%}
+                <a href="{% url 'inventory:products-by-gifts' hk.name %}" class="list-group-item list-group-item-action product__name_ ">{{ hk.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 order-md-1 text-center">
+            <img src="{% static 'stylish-kitchen.avif'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+       <!-- END FOR HOME KITCHEN -->
+      <hr class="featurette-divider">
+   
+        <!-- Fashion -->
+      <div class="row featurette g-3">
+        <div class="col-md-7">
+          <h2 class="featurette-heading fw-normal lh-1 text-center">{{ fashions.parent }}<br></h2>
+          <div class="list-group ">
+            {% for fashion in fashions.children %}
+              {% if fashion.name != 'Customised T-Shirts'%}
+                <a href="{% url 'inventory:products-by-gifts' fashion.name %}" class="list-group-item list-group-item-action product__name_ ">{{ fashion.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="{% static 'fashion.avif'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+        <!-- end Fashion -->
+      <hr class="featurette-divider">
+      <!-- More Gifts -->
+      <div class="row featurette g-4">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading fw-normal lh-1 text-center">{{ more_gifts.parent }}</h2>
+          <div class="list-group mt-2">
+            {% for more in more_gifts.children %}
+              {% if more.name != 'All Gifts' and more.name != 'Desktop Gifts'%}
+               <a href="{% url 'inventory:products-by-gifts' more.name %}" class="list-group-item list-group-item-action product__name_ ">{{ more.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-5 order-md-1 text-center">
+            <img src="{% static 'mor-gifts.avif'%}" style="height: 300px; border-radius: 10px;" class="bd-placeholder-img text-center bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="gift-humpers">
+        </div>
+      </div>
+       <!-- end More Gifts -->
+      <hr class="featurette-divider">
+      
+
+  
+      <!-- /END THE FEATURETTES -->
+  
+    </div><!-- /.container -->
+
+</main>
+
+{% endblock content %}

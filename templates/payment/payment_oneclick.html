@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <!-- PAYMENT INFORMATION -->
+        <div class="col-lg-8">
+            <div class="d-flex align-items-center py-4">
+                <div class="container">
+                    <div class="row">
+                        <div id="payment-form" class="col-12 col-lg-9 mx-auto">
+                            <h3 class="mb-4 create_account__">Payment Information</h3>
+                            <!-- Error messages in this element -->
+                            <div class="a" id="card-errors" role="alert">
+                                
+                            </div>
+                            <form>
+                                <div class="row g-3">
+                                    <!-- PHONE NUMBER -->
+                                    <div class="col-sm-12">
+                                        <label for="firstName" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" id="phonenumber" value="+998" placeholder="Phone Number" required>
+                                        <div class="invalid-feedback">
+                                            Valid first name is required
+                                        </div>
+                                    </div>
+                                    <!-- Customer FULL NAME -->
+                                    <div class="col-sm-12">
+                                        <label for="firstName" class="form-label">F.I.O</label>
+                                        <input type="text" class="form-control" id="fullName" placeholder="Full Name" required>
+                                        <div class="invalid-feedback">
+                                            Valid first name is required
+                                        </div>
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email <span class="text-muted">(Optinal)</span></label>
+                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid email address for shipping updates
+                                        </div>
+                                    </div>
+                                    <!-- Address -->
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="custAdd" placeholder="1234 Main St" required>
+                                        <div class="invalid-feedback">
+                                            Please enter your shipping address
+                                        </div>
+                                    </div>
+                                    <!-- Address 2 -->
+                                    <div class="col-12">
+                                        <label for="address2" class="form-label">Address 2
+                                            <span class="text-muted">(Optinal)</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="custAdd2" placeholder="Apartment or Suite">
+                                    </div>
+                                    <!-- Country -->
+                                    <div class="col-md-7">
+                                        <label for="country" class="form-label">Country</label>
+                                        <select class="form-select" id="country" required>
+                                            <option value="">Choose...</option>
+                                            <option>United States</option>
+                                            <option>New York</option>
+                                            <option>Nukus</option>
+                                            <option>Shimbay</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid country
+                                        </div>
+                                    </div>
+                                    <!-- Zip Code -->
+                                    <div class="col-md-5">
+                                        <label for="PostCode" class="form-label">PostCode</label>
+                                        <input type="text" class="form-control" id="postCode" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Zip Code required
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- PAYMENT  -->
+                                <hr>
+                                <h4 class="mb-3 create_account__">Payment</h4>
+                                <label for="card-element">Credit or debit card</label>
+                                <div id="card-element" class="form-control form-control-payment">
+                                    <!-- PAYMENT ELEMENTS WILL APPEAR HERE -->
+                                </div>
+                                <button type="submit" id="submit_one" class="mt-3 btn signup_btn__ w-100" data-secret="{{ client_secret }}">Pay</button>
+                                <!-- END PAYMENT  -->
+                            </form>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PAYMENT INFORMATION -->
+
+
+        
+        <div class="col-lg-4 mt-4">
+            <!-- PRODUCT INFORMATION -->
+            <div class="card p-2 bg-light mt-lg-5">
+                    <h4 class="text-center one_click_price__">Product price  <b class="color-price__" id="product_price_" data-product_price="{{ product.sale_price}}">${{ product.sale_price }}</b></h4>
+                    <h4 class="text-center one_click_price__">Total price  <b class="color-price__" id="display-total-price">${{ product.sale_price }}</b></h4>
+                <span id="one_click_price" data-isselect="false" data-productprice="{{product.sale_price}}"></span>
+                {% for image in product.media_product_inventory.all %}
+                    {% if image.is_feature %}
+                        <img src="{{ image.image.url }}" class="get_one_image__" alt="{{ image.alt_text }}">
+                    {% endif %}
+                {% endfor %}
+              <p id="on_click_product" data-id="{{ product.id }}" class="get_one_name__">{{ product.product.name }}</p>
+            </div>
+            <!-- END PRODUCT INFORMATION -->
+
+            <hr>
+            <!-- DELIVERY  -->
+            <h4 class="create_account__ text-center">Delivery Brand</h4>
+            {% for option in deliveryoptions %}
+                <div class="card mb-3 deliveryoptions__ border-1  product-item me-md-4 mt-3" data-index="{{ option.id }}">
+                    <div class="row g-0">
+                        <div class="col-md-10 ps-3 ps-md-4 text-center">
+                            <!-- icons -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                            </svg>
+                            <p class="card-text ps-2 mb-1 pt-1 fw-bold create_account__">{{ option.delivery_name }}</p>
+                        </div>
+                        <div class="col-md-9 ps-md-1">
+                            <div class="card-body p-1">
+                                <div class="d-flex justify-content-around">
+                                    <span id="delivery_price{{option.id}}" data-price="{{option.delivery_price}}"></span>
+                                    <p class="delivery_price__"><b>Price</b> <b class="price_and_window">${{ option.delivery_price }}</b></p>
+                                    <p class="delivery_price__"><b>Between</b> <b class="price_and_window">{{ option.delivery_window }}</b></p>
+                                </div>
+                                <p class="card-text ps-2 pb-3 deliveryoptions_about text-center">Your order should be delivered within {{ option.delivery_timeframe }}.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-1 ps-md-1 text-center">
+                            <input type="radio"   name="deliveryOption" id="{{ option.id }}" class="align-middle h-100" value="{{ option.id }}">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- END DELIVERY  -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const CSRF_TOKEN = '{{ csrf_token }}'
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/payment/payment_oneclick.js'%}" data-rel-js=""></script>
+
+{% endblock content %}

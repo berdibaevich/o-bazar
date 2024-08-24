@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ product.product.name  }}
+{% endblock title %}
+
+
+{% block content %}
+
+<main class="pt-5">
+    <div class="row g-3">
+        <!-- PRODUCT IMAGES -->
+        <div class="col-md-5 col-lg-5 order-md-first bg-light p-3">
+            {% for image in product.media_product_inventory.all %}
+                {% if image.is_feature %}
+                    <img src="{{ image.image.url }}" width="200px" class="img-fluid mx-auto d-block p-2" alt="{{ image.alt_text }}">
+                {% else %}
+                    <img src="{{ image.image.url }}" width="80px"  class="img-fluid d-block-inline pt-3 p-1" alt="{{ image.alt_text }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- END PRODUCT IMAGES -->
+        <!-- PRODUCT INFO -->
+        <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
+            <h1 class="mb-0 h3 text-center">{{ product.product.name }}</h1>
+            <!-- PRODUCT ATTRIBUTE NAME AND VALUES -->
+            {% if product.attribute_name_values %}
+                {% for attrvalue in product.attribute_name_values.all %}
+                    <p class="mt-2"><span class="product_attribute_name__">{{ attrvalue.attribute_name }}</span> <b class="product_attribute_value__">{{ attrvalue.attribute_value }}</b></p>
+                {% endfor %}
+            {% endif %}
+            <!-- END PRODUCT ATTRIBUTE NAME AND VALUES -->
+
+            <div class="border">
+                <div class="col border-bottom">
+                    <div class="row p-3">
+                        <div class="col-6">Brand: <b>{{ product.brand.name }}</b></div>
+                        <div class="col-6 text-end">
+                            <span class="h4 fw-bold">
+                                ${{ product.sale_price }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row p-3">
+                            <div class="col-6">
+                                <label for="select">Quantity</label>
+                                <select  id="select">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                </select>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button id="btn_add_to_basket" value="{{ product.id }}" class="btn btn_add_to_basket__" type="button">Add to basket</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- ABOUT PRODUCT INFO -->
+<div class="row mt-3 bg-light p-3">
+    <div class="col">
+        <h1>Description</h1>
+        <p class="mt-2"><b>{{ product.product.description }}</b></p>
+    </div>
+</div>
+<!-- END ABOUT PRODUCT INFO -->
+
+<!-- PRODUCT ADD TO BASKET BUTTON -->
+<script>
+    $(document).on("click", "#btn_add_to_basket", function(e){
+        e.preventDefault()
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:add_to_basket" %}',
+            data:{
+                product_id: $(this).val(),
+                product_quantity: $("#select option:selected").text(),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: "post"
+            },
+            success: function(response){
+                document.getElementById('total_quantity').textContent = response.total_qty
+            },
+            error: function(error){
+                console.log(error)
+            }
+        })
+    })
+</script>
+
+{% endblock content %}
