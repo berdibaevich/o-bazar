@@ -49,7 +49,6 @@ def get_client_secret(request):
     basket = Basket(request)
     total_price = str(basket.get_total_and_delivery_price()).replace(".", "")
     total_price_int = int(total_price)
-    stripe.api_key = "sk_test_51MOjpRDh4Pu0qkGJK8Qe4I9X2GERDaEV62lSzW1FLC4dDoBnp35fOzvjzW2ErnnRPmFTjR5RpURp1RgudjEjoZ9100xlkFvlQ2"
     intent = stripe.PaymentIntent.create(
         amount = total_price_int,
         currency = "usd",
