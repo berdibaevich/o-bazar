@@ -60,7 +60,6 @@ def order_placed(request):
 
 # GET CLIENT SECRET KEY
 def get_client_secretkey(amount, user_id, currency = "usd"):
-    stripe.api_key = "sk_test_51MOjpRDh4Pu0qkGJK8Qe4I9X2GERDaEV62lSzW1FLC4dDoBnp35fOzvjzW2ErnnRPmFTjR5RpURp1RgudjEjoZ9100xlkFvlQ2"
     intent = stripe.PaymentIntent.create(
         amount = amount,
         currency = currency,
